@@ -14,7 +14,7 @@ jobs:
       - name: Setup node.js-alpine
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
         #  cache: 'npm'
       
       - name: Install productions dependencies only
@@ -38,6 +38,7 @@ jobs:
       - name: Run Trivy Scan (SARIF)
         uses: aquasecurity/trivy-action@v0.36.0
         with:
+          scan-type: 'image'
           image-ref: 'cloudstatus:${{ github.sha }}'
           format: 'table'
           exit-code: '1'
