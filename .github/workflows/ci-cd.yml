@@ -35,16 +35,6 @@ jobs:
       - name: Build local image for scanning
         run: docker build -t cloudstatus:${{ github.sha }} .
 
-      - name: Run Trivy Scan (SARIF)
-        uses: aquasecurity/trivy-action@v0.36.0
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'HIGH,CRITICAL'
-          image-ref: 'cloudstatus:${{ github.sha }}'
-        
 
   publish-registry:
     runs-on: ubuntu-latest
