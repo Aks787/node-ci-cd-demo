@@ -1,8 +1,12 @@
-const test = require('node:test');
-const assert = require('node:assert');
-const app = require('../server');
+// ... your existing routes and app setup ...
 
-test('GET /health returns 200 and healthy status', async () => {
-  // Simple sanity assertion
-  assert.strictEqual(typeof app, 'function');
-});
+// This checks if the file is being run directly (like in production) 
+// or if it is just being imported (like in your test file).
+if (require.main === module) {
+  app.listen(3000, () => {
+    console.log('Server running on port 3000');
+  });
+}
+
+// Export the app so your test file can still read it
+module.exports = app;
