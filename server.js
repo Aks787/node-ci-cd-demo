@@ -1,21 +1,11 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+// ... your existing routes (like app.get('/health', ...)) ...
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
-});
-
-app.get('/metrics', (req, res) => {
-  res.status(200).json({
-    uptime: process.uptime(),
-    memoryUsage: process.memoryUsage(),
-    nodeVersion: process.version
+// ONLY start the server if we are NOT running tests
+if (require.main === module) {
+  app.listen(3000, () => {
+    console.log('Server running on port 3000');
   });
-});
-
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
+// Export the app so your test file can read it
 module.exports = app;
